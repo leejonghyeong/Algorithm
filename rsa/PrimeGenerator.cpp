@@ -72,7 +72,12 @@ BigInt generateRandomPrime(int n_size) {
 			number_string.push_back((char)(rand() % 10 + 48));
 	}
 
-	return BigInt(number_string);
+	BigInt rand_number(number_string);
+
+	if (primalityTest(rand_number, 5))
+		return rand_number;
+	else
+		return generateRandomPrime(n_size);
 }
 
 
