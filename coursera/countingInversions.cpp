@@ -60,10 +60,10 @@ vector<int> counting_split_inversions(const vector<int>& left, const vector<int>
     return num_inversions;
 }
 
-//inversion Ä«¿îÆÃ µ¿½Ã¿¡ ¸ÓÁöÁ¤·Ä¼öÇà
-// aÀÇ ±æÀÌ°¡ ÀÛ´Ù¸é 
+//inversion ì¹´ìš´íŒ… ë™ì‹œì— ë¨¸ì§€ì •ë ¬ìˆ˜í–‰
+// aì˜ ê¸¸ì´ê°€ ì‘ë‹¤ë©´ 
 vector<int> counting_inversion(vector<int>& a) {
-    //ÃÊ±â°ª
+    //ì´ˆê¸°ê°’
     if (a.size() == 1) {
         return vector<int> {0};
     }
@@ -85,8 +85,8 @@ vector<int> counting_inversion(vector<int>& a) {
 
     vector<int> num_inversions_left = counting_inversion(left);
     vector<int> num_inversions_right = counting_inversion(right);
-    // Á¤·ÄµÈ left, right¸¦ ´ÙÀ½ ÇÔ¼ö¿¡ ´ëÀÔ
-    // left, right¸¦ ÀÌ¿ëÇÏ¿© a¸¦ Á¤·Ä
+    // ì •ë ¬ëœ left, rightë¥¼ ë‹¤ìŒ í•¨ìˆ˜ì— ëŒ€ì…
+    // left, rightë¥¼ ì´ìš©í•˜ì—¬ aë¥¼ ì •ë ¬
     vector<int> num_split_inversions = counting_split_inversions(left, right, a);
     
     karatsubaAdd(num_inversions_left, num_inversions_right, 0);
