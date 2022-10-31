@@ -17,7 +17,7 @@
 using namespace std;
 
 
-//random device¸¦ ÅëÇØ ³­¼ö»ı¼º¿£Áø ·£´ı ÃÊ±âÈ­
+//random deviceë¥¼ í†µí•´ ë‚œìˆ˜ìƒì„±ì—”ì§„ ëœë¤ ì´ˆê¸°í™”
 random_device rd;
 mt19937 gen(rd());
 
@@ -137,7 +137,7 @@ int main() {
 	vector<vector<int>> adj_list;
 	set<int> vertex_set;
 
-	//2Â÷¿ø ¹è¿­ ÀĞ±â
+	//2ì°¨ì› ë°°ì—´ ì½ê¸°
 	string eachrow;
 	if (input_file) {
 		while (getline(input_file, eachrow)) {
@@ -179,31 +179,31 @@ int main() {
 
 
 /*
-1. edge°¹¼ö°¡ ¾Æ´Ï¶ó vertex°¡ µÎ°³ ³²À»¶§ ±îÁö ¹İº¹ÇÔ
-	1-1. edge contractionÇÏ¸é adjacent vertices µ¿±âÈ­
-	1-2. self edge Á¦°Å
-2. ¸¶Áö¸· ³²Àº edge °³¼ö¸¦ ¸®ÅÏÇÏ¸é µÊ.
+1. edgeê°¯ìˆ˜ê°€ ì•„ë‹ˆë¼ vertexê°€ ë‘ê°œ ë‚¨ì„ë•Œ ê¹Œì§€ ë°˜ë³µí•¨
+	1-1. edge contractioní•˜ë©´ adjacent vertices ë™ê¸°í™”
+	1-2. self edge ì œê±°
+2. ë§ˆì§€ë§‰ ë‚¨ì€ edge ê°œìˆ˜ë¥¼ ë¦¬í„´í•˜ë©´ ë¨.
 
 
 algorithm
-1. edge ·£´ıÇÏ°Ô ¼±ÅÃ
-2. edge ¾çÂÊ ³¡ vertices v1 < v2 Áß v1¸¸ ³²±ä´Ù.
-3. self edge¸¦ »èÁ¦ÇÑ´Ù.
-	: adj_list¸¦ ¼öÁ¤ÇÒ ÇÊ¿ä°¡ ¾ø´Ù. -> component setÀ» ¸¸µé¾î¾ßÇÔ
-	adj_list¸¦ ¼öÁ¤ÇÑ´Ù -> edge set ¼öÁ¤
-4. vertex°¡ µÎ °³ v, w¸¸ ³²¾ÒÀ» ¶§ ³²Àº edge°³¼ö¸¦ ¼¾´Ù.
+1. edge ëœë¤í•˜ê²Œ ì„ íƒ
+2. edge ì–‘ìª½ ë vertices v1 < v2 ì¤‘ v1ë§Œ ë‚¨ê¸´ë‹¤.
+3. self edgeë¥¼ ì‚­ì œí•œë‹¤.
+	: adj_listë¥¼ ìˆ˜ì •í•  í•„ìš”ê°€ ì—†ë‹¤. -> component setì„ ë§Œë“¤ì–´ì•¼í•¨
+	adj_listë¥¼ ìˆ˜ì •í•œë‹¤ -> edge set ìˆ˜ì •
+4. vertexê°€ ë‘ ê°œ v, wë§Œ ë‚¨ì•˜ì„ ë•Œ ë‚¨ì€ edgeê°œìˆ˜ë¥¼ ì„¼ë‹¤.
 
-edge set ¼öÁ¤½Ã¿¡
-(x, v2), (v2, y) -> (x, v1), (v1, y)·Î ¹Ù²Û´Ù.
+edge set ìˆ˜ì •ì‹œì—
+(x, v2), (v2, y) -> (x, v1), (v1, y)ë¡œ ë°”ê¾¼ë‹¤.
 
-(v1, v2), (v2, v1)ÀÌ ¿©·¯°³ ÀÖÀ» ¼ö ÀÖ´Ù.
--> v1, v2 contraction ½Ã¿¡¸¸ »èÁ¦ÇØ¾ßÇÔ. ±× Àü¿¡´Â Áßº¹Çã¿ëÇØ¾ßÇÔ
--> edge_setÀ¸·Î multiset ÄÁÅ×ÀÌ³Ê »ç¿ë.
+(v1, v2), (v2, v1)ì´ ì—¬ëŸ¬ê°œ ìˆì„ ìˆ˜ ìˆë‹¤.
+-> v1, v2 contraction ì‹œì—ë§Œ ì‚­ì œí•´ì•¼í•¨. ê·¸ ì „ì—ëŠ” ì¤‘ë³µí—ˆìš©í•´ì•¼í•¨
+-> edge_setìœ¼ë¡œ multiset ì»¨í…Œì´ë„ˆ ì‚¬ìš©.
 
-adj_list ¼öÁ¤À» ÇØ¾ßÇÏ´Â°¡??
+adj_list ìˆ˜ì •ì„ í•´ì•¼í•˜ëŠ”ê°€??
 
-adj_list and edge_set µÑ Áß ÇÏ³ª¸¸!!
-edge_setÀº ÇÑ ¹ø ¼öÁ¤¿¡ O(m) °É¸²
-adj_list´Â O(m) memory¸¦ Â÷ÁöÇÏÁö¸¸ O(d_v) ¸¸Å­ °É¸².
+adj_list and edge_set ë‘˜ ì¤‘ í•˜ë‚˜ë§Œ!!
+edge_setì€ í•œ ë²ˆ ìˆ˜ì •ì— O(m) ê±¸ë¦¼
+adj_listëŠ” O(m) memoryë¥¼ ì°¨ì§€í•˜ì§€ë§Œ O(d_v) ë§Œí¼ ê±¸ë¦¼.
 
 */
