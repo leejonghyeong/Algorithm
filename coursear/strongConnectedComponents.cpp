@@ -6,13 +6,13 @@
 #include <sstream>
 #include <map>
 
-//½Ã°£ÃøÁ¤
+//ì‹œê°„ì¸¡ì •
 #include <time.h>
 
 
 using namespace std;
 
-//Å×½ºÆ® ¹æÇâ±×·¡ÇÁ
+//í…ŒìŠ¤íŠ¸ ë°©í–¥ê·¸ë˜í”„
 //bool visited[8] = { false };
 //bool visited_rev[8] = { false };
 map<int, vector<int>> test{ {1, vector<int>{2}},
@@ -68,14 +68,14 @@ vector<int> dfsLoop(map<int, vector<int>>& graph, map<int, vector<int>>& graph_r
 	int n = graph.size();
 	stack<int> path;
 
-	//dfs·Î Å½»öÀÌ ³¡³­ ¼ø¼­·Î stack Ã¤¿ì±â
+	//dfsë¡œ íƒìƒ‰ì´ ëë‚œ ìˆœì„œë¡œ stack ì±„ìš°ê¸°
 	for (const auto& edge : graph) {
 		int k = edge.first;
 		if (visited[k] == true) continue;
 		dfs(graph, k, visited, path);
 	}
 
-	//stack ¼ø¼­´ë·Î ¿ª¹æÇâ ±×·¡ÇÁ¸¦ dfs·Î Å½»ö
+	//stack ìˆœì„œëŒ€ë¡œ ì—­ë°©í–¥ ê·¸ë˜í”„ë¥¼ dfsë¡œ íƒìƒ‰
 	vector<int> scc;
 
 	while (path.empty() == false) {
@@ -91,7 +91,7 @@ vector<int> dfsLoop(map<int, vector<int>>& graph, map<int, vector<int>>& graph_r
 
 	sort(scc.rbegin(), scc.rend());
 
-	//scc°¡ 5°³ ¹Ì¸¸ÀÎ °æ¿ì 0À¸·Î Ã¤¿ò.
+	//sccê°€ 5ê°œ ë¯¸ë§Œì¸ ê²½ìš° 0ìœ¼ë¡œ ì±„ì›€.
 	while (scc.size() < 5){
 		scc.push_back(0);
 	}
