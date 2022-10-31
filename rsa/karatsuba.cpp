@@ -60,8 +60,8 @@ string vecToString(vector<int> vec) {
 }
 
 
-// µ¡¼À/»¬¼À¿¡ ´ëÇÑ num ÀÚ¸´¼ö ¿Ã¸²/³»¸²À» ¼öÇà
-// ¾ÕÀÚ¸® 0 Á¦°Å
+// ë§ì…ˆ/ëº„ì…ˆì— ëŒ€í•œ num ìë¦¿ìˆ˜ ì˜¬ë¦¼/ë‚´ë¦¼ì„ ìˆ˜í–‰
+// ì•ìë¦¬ 0 ì œê±°
 void regroup(vector<int>& num) {
 	num.push_back(0);
 	int size = num.size();
@@ -111,7 +111,7 @@ void karatsubaAdd(vector<int>& a, const vector<int>& b, int k = 0) {
 }
 
 // a -= b
-// a >= b °¡Á¤
+// a >= b ê°€ì •
 void karatsubaSub(vector<int>& a, const vector<int>& b) {
 	for (int i = 0; i < b.size(); i++) {
 		a[i] -= b[i];
@@ -165,7 +165,7 @@ vector<int> karatsubaProduct(const vector<int>& a, const vector<int>& b) {
 	
 }
 
-//string È¤Àº integer¸¦ ÀÎ¼ö·Î ¹Ş´Â °æ¿ì¿¡µµ Á¤ÀÇ
+//string í˜¹ì€ integerë¥¼ ì¸ìˆ˜ë¡œ ë°›ëŠ” ê²½ìš°ì—ë„ ì •ì˜
 
 //compare two strings which indicate two positive integers
 //return true if a >= b return false else
