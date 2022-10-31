@@ -7,16 +7,16 @@
 using namespace std;
 
 /*
-´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®Áò.
-±âº»ÀûÀ¸·Î BFS ¾Ë°í¸®Áò°ú »À´ë°¡ °°´Ù. BFS¿Í ´Ù¸¥ Á¡Àº Å©°Ô
-1. Queue ´ë½Å Priority Queue¸¦ »ç¿ëÇÑ´Ù.
-2. visited ¸¦ Ã¼Å©ÇÏÁö ¾Ê´Â´Ù.
+ë‹¤ìµìŠ¤íŠ¸ë¼ ì•Œê³ ë¦¬ì¦˜.
+ê¸°ë³¸ì ìœ¼ë¡œ BFS ì•Œê³ ë¦¬ì¦˜ê³¼ ë¼ˆëŒ€ê°€ ê°™ë‹¤. BFSì™€ ë‹¤ë¥¸ ì ì€ í¬ê²Œ
+1. Queue ëŒ€ì‹  Priority Queueë¥¼ ì‚¬ìš©í•œë‹¤.
+2. visited ë¥¼ ì²´í¬í•˜ì§€ ì•ŠëŠ”ë‹¤.
 
-1¹ø: ´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®Áò¿¡¼­´Â neihborhood nodes Áß¿¡¼­ °¡Àå °Å¸®(from start)°¡ ÂªÀº node¼øÀ¸·Î Á¢±ÙÇÑ´Ù.
-µû¶ó¼­ Priority Queue¸¦ ÀÌ¿ëÇÏ¿© O(log E) º¹Àâµµ¸¸À¸·Î ÃÖ¼Ò °Å¸® node¸¦ Ã£¾Æ°¥ ¼ö ÀÖ´Ù.
+1ë²ˆ: ë‹¤ìµìŠ¤íŠ¸ë¼ ì•Œê³ ë¦¬ì¦˜ì—ì„œëŠ” neihborhood nodes ì¤‘ì—ì„œ ê°€ì¥ ê±°ë¦¬(from start)ê°€ ì§§ì€ nodeìˆœìœ¼ë¡œ ì ‘ê·¼í•œë‹¤.
+ë”°ë¼ì„œ Priority Queueë¥¼ ì´ìš©í•˜ì—¬ O(log E) ë³µì¡ë„ë§Œìœ¼ë¡œ ìµœì†Œ ê±°ë¦¬ nodeë¥¼ ì°¾ì•„ê°ˆ ìˆ˜ ìˆë‹¤.
 
-2¹ø: ´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®Áò¿¡¼­ ÀÌ¹Ì ¹æ¹®ÇÑ node¶óµµ ´õ ºü¸¥ path·Î ¹æ¹®ÇÒ ¼ö ÀÖÀ¸¸é °»½ÅÇÑ´Ù. ¶ÇÇÑ ¿ÀÁ÷ ±×¶§¸¸ ¹æ¹®ÇÑ´Ù.
-µû¶ó¼­ visited Ã¼Å©´Â faster path updates·Î ´ëÃ¼µÈ´Ù°í »ı°¢ÇÏÀÚ.
+2ë²ˆ: ë‹¤ìµìŠ¤íŠ¸ë¼ ì•Œê³ ë¦¬ì¦˜ì—ì„œ ì´ë¯¸ ë°©ë¬¸í•œ nodeë¼ë„ ë” ë¹ ë¥¸ pathë¡œ ë°©ë¬¸í•  ìˆ˜ ìˆìœ¼ë©´ ê°±ì‹ í•œë‹¤. ë˜í•œ ì˜¤ì§ ê·¸ë•Œë§Œ ë°©ë¬¸í•œë‹¤.
+ë”°ë¼ì„œ visited ì²´í¬ëŠ” faster path updatesë¡œ ëŒ€ì²´ëœë‹¤ê³  ìƒê°í•˜ì.
 
 */
 
@@ -29,7 +29,7 @@ vector<int> dist(201, INF);
 void dijkstra(vector<vector<pair<int,int>>>& graph, const int start) {
 	priority_queue<pair<int, int>> pq;
 
-	//½ÃÀÛÁ¡ ÃÊ±âÈ­
+	//ì‹œì‘ì  ì´ˆê¸°í™”
 	dist[start] = 0;
 	pq.push(make_pair(0, start));
 
@@ -45,7 +45,7 @@ void dijkstra(vector<vector<pair<int,int>>>& graph, const int start) {
 			int nhd_w = nhd_node.second;
 			if (d + edge_len < dist[nhd_w]) {
 				dist[nhd_w] = d + edge_len;
-				//Å¥ ´ë½Å ¿ì¼±¼øÀ§ Å¥ »ç¿ë.
+				//í ëŒ€ì‹  ìš°ì„ ìˆœìœ„ í ì‚¬ìš©.
 				pq.push(make_pair(-dist[nhd_w], nhd_w));
 			}
 		}
@@ -67,7 +67,7 @@ int main() {
 
 	ifstream input_file("dijkstra.txt");
 	
-	//°¢ row¸¶´Ù "v,d" word¸¦ ²÷¾î ÀĞ°í, stringÀ» pair<int, int>·Î º¯È¯ÇØÁØ´Ù.
+	//ê° rowë§ˆë‹¤ "v,d" wordë¥¼ ëŠì–´ ì½ê³ , stringì„ pair<int, int>ë¡œ ë³€í™˜í•´ì¤€ë‹¤.
 	if (input_file.is_open()) {
 		string eachrow;
 		graph.push_back(vector<pair<int,int>>());
