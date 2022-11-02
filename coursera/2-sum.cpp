@@ -12,27 +12,45 @@ Compute number of values t in [-10000, 10000] such that distict numbers x, y in 
 #include <vector>
 #include <string>
 #include <set>
+#include <algorithm>
+#include <ctime>
+#include "2-sum.h"
 
 using namespace std;
 typedef long long ll;
 
-//chaining hash structure
-void chaining_hash();
-
-//open addressing hash structure
-void openaddressing_hash();
 
 /*
 algorithm
 
 1. for each t and x in input_file, search t-y in input_file -> O(n) * 20000 = 20 billion
 
-2. 
+2. Binary search
 	2-1 get sorted set xs
-	2-2 for each t, 
-
+	2-2 for each x in xs, find interval I of xs such that -10000-x <= y <=10000-x. (binary search)
+	2-3 Insert x+xs[I] elements in a hash table.
+	2-4 repeat 2, 3 for every elements in xs
+	
+	Time Complexity: O(nlogn) for n=|xs|
 
 */
+
+template<typename T>
+void insertValidTvalue(const vector<ll>& summands, T&  hash) {
+	int counter = 1;
+	for (const auto& x : summands) {
+		int start = lower_bound(summands.begin(), summands.end(), - 10000 - x) - summands.begin();
+		if (start == summands.size()) continue;
+		int end = upper_bound(summands.begin(), summands.end(), 10000 - x) - summands.begin();
+		counter++;
+		//std::cout << counter++ << "th intervals: " << start << ", " << end << endl;
+		//if (++counter % 1000 == 0) { std::cout << counter << "th iterations..." << endl; }
+		for (int i = start; i < end; i++) {
+			hash.insert(x + summands[i]);
+		}
+	}
+}
+
 
 
 bool findSummandPair(const set <ll> & summand_set, ll t) {
@@ -49,6 +67,10 @@ int main() {
 	vector<ll> summands;
 	set<ll> summand_set;
 	ifstream input_file("2sum.txt");
+
+	time_t start_read_file, start_sorting, start_binary_search, end_binary_search;
+
+	start_read_file = clock();
 	if (input_file.is_open()) {
 		string integer;
 		while (input_file >> integer) {
@@ -56,15 +78,37 @@ int main() {
 			summand_set.insert(stoll(integer));
 		}
 	}
+	start_sorting = clock();
+	//binary search
+	sort(summands.begin(), summands.end()); //sort summands array
 
-	int counter = 0;
-	for (int t = -10000; t <= 10000; t++) {
-		if (findSummandPair(summand_set, t))
-			counter += 1;
-		std::cout << t << "th iteration.." << endl;
-	}
+	set<int> hash_table;
+	start_binary_search = clock();
+	insertValidTvalue<set<int>>(summands, hash_table);
+	end_binary_search = clock();
 
-	std::cout << "Number of target values t: " << counter << endl;
+	std::cout << "Reading file...: " << (double)(start_sorting - start_read_file) / CLOCKS_PER_SEC << endl;
+	std::cout << "Sorting arrays...: " << (double)(start_binary_search - start_sorting) / CLOCKS_PER_SEC << endl;
+	std::cout << "Binary Searching...: " << (double)(end_binary_search - start_binary_search) / CLOCKS_PER_SEC << endl;
+	std::cout << "Number of target values t: " << hash_table.size() << endl;
+
+
+	std::cout << "Hash Performance - Chaining Method" << std::endl;
+	ChainHash<int> chain_hash_table(10007);
+	start_binary_search = clock();
+	insertValidTvalue<ChainHash<int>>(summands, chain_hash_table);
+	end_binary_search = clock();
+	std::cout << "Binary Searching...: " << (double)(end_binary_search - start_binary_search) / CLOCKS_PER_SEC << endl;
+	std::cout << "Number of target values t: " << chain_hash_table.size() << endl;
+
+	std::cout << "Hash Performance - OpenAddressing Method" << std::endl;
+	OpenAddressingHash<int> open_addressing_hash_table(10007);
+	start_binary_search = clock();
+	insertValidTvalue<OpenAddressingHash<int>>(summands, open_addressing_hash_table);
+	end_binary_search = clock();
+	std::cout << "Binary Searching...: " << (double)(end_binary_search - start_binary_search) / CLOCKS_PER_SEC << endl;
+	std::cout << "Number of target values t: " << open_addressing_hash_table.size() << endl;
+
 
 	return 0;
 }
